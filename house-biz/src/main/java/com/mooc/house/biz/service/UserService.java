@@ -34,6 +34,8 @@ public class UserService {
   @Autowired
   private UserMapper userMapper;
 
+  @Value("${file.path}")
+  private String imgPrefix;
 
   public List<User> getUsers() {
     return userMapper.selectUsers();
@@ -64,4 +66,31 @@ public class UserService {
   public boolean enable(String key) {
      return  mailService.enable(key);
   }
+
+    public User auth(String username, String password) {
+    User user =new User();
+    user.setEmail(username);
+    user.setPasswd(HashUtils.encryPassword(password));
+    user.setEnable(1);
+    List<User> users =  this.getUserByQuery(user);
+    if(!users.isEmpty()){
+      return users.get(0);
+    }
+       return  null;
+    }
+
+  public List<User> getUserByQuery(User user) {
+    List<User> users = userMapper.selectUsersByQuery(user);
+    String prefix = this.getClass().getResource("/").getPath();
+    users.forEach(u -> {
+       u.setAvatar(imgPrefix+u.getAvatar());
+    });
+    return users;
+  }
+
+    public void updateUser(User updateUser, String email) {
+       updateUser.setEmail(email);
+       BeanHelper.onUpdate(updateUser);
+       userMapper.update(updateUser);
+    }
 }

@@ -28,7 +28,7 @@ public class AuthInterceptor implements HandlerInterceptor{
 			}
 		});
 	    String reqUri =	request.getRequestURI();
-	    if (reqUri.startsWith("/static") || reqUri.startsWith("/error") ) {
+	    if (reqUri.startsWith("/static") || reqUri.startsWith("/error") || reqUri.startsWith("/imgs")) {
 			return true;
 		}
 	    HttpSession session = request.getSession(true);

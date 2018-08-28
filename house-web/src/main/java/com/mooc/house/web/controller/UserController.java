@@ -70,14 +70,14 @@ public class UserController {
       req.setAttribute("target", target);
       return "/user/accounts/signin";
     }
-    User user = null;
+    User user = userService.auth(username,password);
     if (user == null) {
       return "redirect:/accounts/signin?" + "target=" + target + "&username=" + username + "&"
           + ResultMsg.errorMsg("用户名或密码错误").asUrlParams();
     } else {
       HttpSession session = req.getSession(true);
       session.setAttribute(CommonConstants.USER_ATTRIBUTE, user);
-      // session.setAttribute(CommonConstants.PLAIN_USER_ATTRIBUTE, user);
+      session.setAttribute(CommonConstants.PLAIN_USER_ATTRIBUTE, user);
       return StringUtils.isNoneBlank(target) ? "redirect:" + target : "redirect:/index";
     }
   }
@@ -97,12 +97,48 @@ public class UserController {
 
   // ---------------------个人信息页-------------------------
   /**
-   * 1.能够提供页面信息 2.更新用户信息
+   * 1.能够提供页面信息
+   * 2.更新用户信息
    * 
    * @param updateUser
    * @param model
    * @return
    */
+  @RequestMapping("accounts/profile")
+  public String profile(HttpServletRequest request,User updateUser,ModelMap model){
+   if(updateUser.getEmail()  == null){
+     return "/user/accounts/profile";
+   }
+   userService.updateUser(updateUser,updateUser.getEmail());
+
+    User query = new User();
+    query.setEmail(updateUser.getEmail());
+    List<User> users = userService.getUserByQuery(query);
+    request.getSession(true).setAttribute(CommonConstants.USER_ATTRIBUTE,users.get(0));
+    return "redirect:/accounts/profile?"+ResultMsg.successMsg("更新成功").asUrlParams();
+  }
+
+  /**
+   * 修改密码
+   * @param email
+   * @param password
+   * @param newPassword
+   * @param confirmPassword
+   * @param model
+   * @return
+   */
+  @RequestMapping("accounts/changePassword")
+  public String changePassword(String email,String password,String newPassword,String confirmPassword,ModelMap model){
+    User user = userService.auth(email, password);
+    if(user ==null){
+      return "redirect:/accounts/profile?"+ResultMsg.errorMsg("密码错误").asUrlParams();
+    }
+
+    User updateUser = new User();
+    updateUser.setPasswd(HashUtils.encryPassword(newPassword));
+    userService.updateUser(updateUser,user.getEmail());
+    return "redirect:/accounts/profile?"+ResultMsg.successMsg("更新成功").asUrlParams();
+  }
 
 
 

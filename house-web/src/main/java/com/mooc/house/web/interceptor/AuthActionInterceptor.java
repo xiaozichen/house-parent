@@ -1,5 +1,6 @@
 package com.mooc.house.web.interceptor;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,11 @@ public class AuthActionInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 
+	}
+
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		String msg = URLEncoder.encode("请先登录","utf-8");
+		System.err.println(msg);
 	}
 
 }

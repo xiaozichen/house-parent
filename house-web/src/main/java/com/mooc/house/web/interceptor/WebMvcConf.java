@@ -16,7 +16,7 @@ public class WebMvcConf extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
-		 registry.addInterceptor(authInterceptor).excludePathPatterns("/static").addPathPatterns("/**");
+		 registry.addInterceptor(authInterceptor).excludePathPatterns("/static").excludePathPatterns("/imgs").addPathPatterns("/**");
 		    registry
 		        .addInterceptor(authActionInterceptor).addPathPatterns("/house/toAdd")
 		        .addPathPatterns("/accounts/profile").addPathPatterns("/accounts/profileSubmit")
@@ -24,6 +24,7 @@ public class WebMvcConf extends WebMvcConfigurerAdapter {
 		        .addPathPatterns("/house/ownlist").addPathPatterns("/house/add")
 		        .addPathPatterns("/house/toAdd").addPathPatterns("/agency/agentMsg")
 		        .addPathPatterns("/comment/leaveComment").addPathPatterns("/comment/leaveBlogComment");
+
 		    super.addInterceptors(registry);
 	}
 
