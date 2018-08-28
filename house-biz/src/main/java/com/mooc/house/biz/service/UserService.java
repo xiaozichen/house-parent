@@ -83,7 +83,7 @@ public class UserService {
     List<User> users = userMapper.selectUsersByQuery(user);
     String prefix = this.getClass().getResource("/").getPath();
     users.forEach(u -> {
-       u.setAvatar(imgPrefix+u.getAvatar());
+       u.setAvatar("/static"+imgPrefix+u.getAvatar());
     });
     return users;
   }

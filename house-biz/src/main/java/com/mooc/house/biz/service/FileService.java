@@ -22,14 +22,14 @@ public class FileService {
 	
 	
 	public List<String> getImgPaths(List<MultipartFile> files) {
-		String prefix = this.getClass().getResource("/").getPath();
+		String prefix = this.getClass().getResource("/static/static").getPath();
 		List<String> paths = Lists.newArrayList();
 		files.forEach(file -> {
 			File localFile = null;
 			if (!file.isEmpty()) {
 				try {
 					localFile =  saveToLocal(file, prefix+filePath);
-					String path = StringUtils.substringAfterLast(localFile.getAbsolutePath(), filePath.substring(1,filePath.length()));
+					String path = StringUtils.substringAfterLast(localFile.getAbsolutePath().replace("\\","/"), filePath.substring(1,filePath.length()));
 					paths.add(path);
 				} catch (IOException e) {
 					throw new IllegalArgumentException(e);
