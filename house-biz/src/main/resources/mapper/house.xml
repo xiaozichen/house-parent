@@ -86,14 +86,14 @@
      </if>
    </select>
    
-   <select id="selectPageCount" resultType="long">
+   <select id="selectPageCount" resultType="java.lang.Long">
      select count(id)
      from house a
      <include refid="houseCondition"></include>
    </select>
    
- <!--  <select id="selectCommunity" resultType="community">
-     select * 
+  <select id="selectCommunity" resultType="community">
+     select *
      from community
      <where>
         <if test="id != null and id != 0">
@@ -103,7 +103,7 @@
           and name = #{name}
         </if>
      </where>
-   </select>-->
+   </select>
    
    <!--<select id="selectHouseUser" resultType="houseUser">
      select id,house_id,user_id,create_time,type
@@ -111,12 +111,12 @@
      where house_id = #{id} and user_id = #{userId} and type = #{type}
    </select>-->
    
-  <!-- <select id="selectSaleHouseUser" resultType="houseUser">
+   <select id="selectSaleHouseUser" resultType="houseUser">
      select id,house_id,user_id,create_time,type
      from house_user
      where house_id = #{id} and  type = 1
      limit 1
-   </select>-->
+   </select>
    
   <!-- <update id="updateHouse">
       update house
@@ -186,7 +186,7 @@
                      
    </insert>-->
    
-    <!-- <insert id="insertUserMsg">
+     <insert id="insertUserMsg">
      insert into house_msg (
                      msg,
                      create_time,
@@ -201,7 +201,7 @@
                       #{houseId},
                       #{agentId}
                      )
-    </insert>-->
+    </insert>
     
     <!--<delete id="deleteHouseUser">
       delete from house_user

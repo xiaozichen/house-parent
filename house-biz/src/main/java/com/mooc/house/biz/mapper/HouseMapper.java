@@ -1,7 +1,6 @@
 package com.mooc.house.biz.mapper;
 
-import com.mooc.house.common.model.House;
-import com.mooc.house.common.model.User;
+import com.mooc.house.common.model.*;
 import com.mooc.house.common.page.PageParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,17 +16,17 @@ public interface HouseMapper {
 	
 	public int insert(User account);
 
-	//public List<Community> selectCommunity(Community community);
+	public List<Community> selectCommunity(Community community);
 
 	//public int insert(House house);
 
-	//public HouseUser selectHouseUser(@Param("userId") Long userId, @Param("id") Long houseId, @Param("type") Integer integer);
-	
-	//public HouseUser selectSaleHouseUser(@Param("id") Long houseId);
-
 	//public int insertHouseUser(HouseUser houseUser);
 
-	//public int insertUserMsg(UserMsg userMsg);
+	public int insertUserMsg(UserMsg userMsg);
+
+    //public HouseUser selectHouseUser(@Param("userId") Long userId, @Param("id") Long houseId, @Param("type") Integer integer);
+
+    public HouseUser selectSaleHouseUser(@Param("id") Long houseId);
 
 	//public int updateHouse(House updateHouse);
 	
